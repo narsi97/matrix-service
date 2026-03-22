@@ -141,6 +141,7 @@ func matrixToString(matrix [][]int) string {
 	return b.String()
 }
 
+//////////////////////
 // Handlers
 
 func handleRequest(w http.ResponseWriter, r *http.Request, fn func([][]int) string) {

@@ -73,10 +73,6 @@ jobs:
           name: Install Helm
           command: |
             curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-      
-      - run:
-          name: Verify AWS identity
-          command: aws sts get-caller-identity
 
       - run:
           name: Configure kubeconfig for EKS
@@ -84,10 +80,6 @@ jobs:
             aws eks update-kubeconfig \
               --region $AWS_REGION \
               --name $EKS_CLUSTER_NAME
-
-      - run:
-          name: Verify cluster access
-          command: kubectl get nodes
 
       - run:
           name: Deploy using Helm
@@ -108,6 +100,9 @@ workflows:
             - build-and-test
 
       - deploy-to-eks:
+          jobs:
+            - deploy:
+                context: aws-creds
           requires:
             - docker-build-and-push
           filters:

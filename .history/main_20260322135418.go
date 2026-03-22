@@ -63,7 +63,9 @@ func parseCSV(r *http.Request) ([][]int, error) {
 	return matrix, nil
 }
 
+//////////////////////
 // Business Logic
+//////////////////////
 
 func echo(matrix [][]int) string {
 	var b strings.Builder
@@ -141,7 +143,9 @@ func matrixToString(matrix [][]int) string {
 	return b.String()
 }
 
+//////////////////////
 // Handlers
+//////////////////////
 
 func handleRequest(w http.ResponseWriter, r *http.Request, fn func([][]int) string) {
 	matrix, err := parseCSV(r)
