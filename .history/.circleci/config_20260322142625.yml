@@ -61,7 +61,7 @@ jobs:
       - checkout
 
       - aws-cli/setup:
-          role_arn: $AWS_ROLE_ARN
+          role_arn
 
       - run:
           name: Install kubectl
