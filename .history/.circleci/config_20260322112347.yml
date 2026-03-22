@@ -1,0 +1,62 @@
+version: 2.1
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/go:1.22
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run:
+          name: Download dependencies
+          command: go mod tidy
+
+      - run:
+          name: Run unit tests
+          command: go test -v ./...
+
+      - run:
+          name: Run race detector
+          command: go test -race ./...
+
+      - run:
+          name: Run benchmarks
+          command: go test -bench=. ./...
+
+      - run:
+        name: Test coverage
+        command: go test -coverprofile=coverage.out ./...
+
+      - run:
+        name: Show coverage
+        command: go tool cover -func=coverage.out
+      
+      - run:
+          name: Build Docker image
+          command: docker build -t matrix-service .
+      
+      - run:
+          name: Install kubectl
+          command: |
+            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+            chmod +x kubectl
+            sudo mv kubectl /usr/local/bin/
+
+      - run:
+          name: Install Helm
+          command: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+      - run:
+          name: Deploy to EKS
+          command: |
+            aws eks update-kubeconfig --region us-west-2 --name matrix-cluster
+            helm upgrade --install matrix-service ./matrix-service
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-test-docker

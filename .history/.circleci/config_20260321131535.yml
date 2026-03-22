@@ -1,0 +1,40 @@
+version: 2.1
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/go:1.22
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run:
+          name: Download dependencies
+          command: go mod tidy
+
+      - run:
+          name: Run unit tests
+          command: go test -v ./...
+
+      - run:
+          name: Run race detector
+          command: go test -race ./...
+
+      - run:
+          name: Run benchmarks
+          command: go test -bench=. ./...
+      - run:
+        name: Test coverage
+        command: go test -coverprofile=coverage.out ./...
+
+      - run:
+        name: Show coverage
+        command: go tool cover -func=coverage.out
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-and-test
