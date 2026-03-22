@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  repository: narsi24/matrix-service
+  repository: /matrix-service
   tag: latest
   pullPolicy: IfNotPresent
 
