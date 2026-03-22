@@ -72,6 +72,7 @@ jobs:
           command: |
             curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
+
       - run:
           name: Configure kubeconfig for EKS
           command: |
