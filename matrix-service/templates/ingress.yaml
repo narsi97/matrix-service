@@ -4,7 +4,7 @@ metadata:
   name: matrix-service
 spec:
   rules:
-    - host: myapp.com
+    - host: ""
       http:
         paths:
           - path: /
