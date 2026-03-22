@@ -10,6 +10,10 @@ service:
   port: 80
   targetPort: 8080
 
+serviceAccount:
+  create: true
+  name: matrix-service
+
 resources:
   limits:
     cpu: "500m"
@@ -27,3 +31,15 @@ readinessProbe:
   path: /health
   initialDelaySeconds: 5
   periodSeconds: 10
+
+httpRoute:
+  enabled: true
+  host: ""
+  path: "/"
+  parentRefs:
+    - name: matrix-service
+      kind: Service
+      namespace: default
+
+autoscaling:
+  enabled: true 
