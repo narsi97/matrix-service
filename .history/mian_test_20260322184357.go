@@ -165,7 +165,9 @@ func TestInvertHandler(t *testing.T) {
 	}
 }
 
+/////////////////////////
 // Error Handling Tests
+/////////////////////////
 
 func TestInvalidMatrix(t *testing.T) {
 	req := createMultipartRequest(t, "/add", "1,2,3\n4,5,6") // not square

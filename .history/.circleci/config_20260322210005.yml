@@ -52,13 +52,20 @@ jobs:
       - run:
           name: Push Docker image
           command: |
-            docker push $DOCKER_USERNAME/matrix-service:$CIRCLE_SHA1
+            docker push /matrix-service:$CIRCLE_SHA1
 
   deploy-to-eks:
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
+
+      - run:
+          name: Install AWS CLI
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
 
       - run:
           name: Install kubectl
@@ -71,10 +78,6 @@ jobs:
           name: Install Helm
           command: |
             curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-      
-      - run:
-          name: Verify AWS identity
-          command: aws sts get-caller-identity
 
       - run:
           name: Configure kubeconfig for EKS
@@ -82,7 +85,6 @@ jobs:
             aws eks update-kubeconfig \
               --region $AWS_REGION \
               --name $EKS_CLUSTER_NAME \
-              --role-arn $AWS_ROLE_ARN
 
       - run:
           name: Verify cluster access

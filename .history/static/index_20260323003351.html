@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matrix Operations Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 600px;
+        }
+        .operation {
+            margin: 10px 0;
+        }
+        button {
+            padding: 8px 16px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+        input[type="file"] {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Matrix Operations</h1>
+
+        <p>Upload a CSV file and choose an operation:</p>
+
+        <!-- Shared File Input -->
+        <input type="file" id="fileInput" />
+
+        <!-- Operations -->
+        <div class="operation">
+            <button onclick="submitForm('/echo')">Echo</button>
+        </div>
+
+        <div class="operation">
+            <button onclick="submitForm('/invert')">Invert</button>
+        </div>
+
+        <div class="operation">
+            <button onclick="submitForm('/flatten')">Flatten</button>
+        </div>
+
+        <div class="operation">
+            <button onclick="submitForm('/sum')">Sum</button>
+        </div>
+
+        <div class="operation">
+            <button onclick="submitForm('/multiply')">Multiply</button>
+        </div>
+
+        <h3>Result:</h3>
+        <pre id="result"></pre>
+    </div>
+
+    <script>
+        function submitForm(endpoint) {
+            const fileInput = document.getElementById("fileInput");
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert("Please select a file first!");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            fetch(endpoint, {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("result").innerText = data;
+            })
+            .catch(error => {
+                document.getElementById("result").innerText = "Error: " + error;
+            });
+        }
+    </script>
+</body>
+</html>

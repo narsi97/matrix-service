@@ -1,0 +1,38 @@
+replicaCount: 2
+
+image:
+  repository: narsi24/matrix-service
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8080
+
+serviceAccount:
+  create: true
+  name: matrix-service
+
+resources:
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+  requests:
+    cpu: "200m"
+    memory: "256Mi"
+
+livenessProbe:
+  path: /health
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+readinessProbe:
+  path: /health
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+httpRoute:
+  enabled: true   # or false, depending on what you want
+  host: ""
+  path: "/"

@@ -60,6 +60,8 @@ jobs:
     steps:
       - checkout
 
+      
+
       - run:
           name: Install kubectl
           command: |
@@ -71,10 +73,6 @@ jobs:
           name: Install Helm
           command: |
             curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-      
-      - run:
-          name: Verify AWS identity
-          command: aws sts get-caller-identity
 
       - run:
           name: Configure kubeconfig for EKS

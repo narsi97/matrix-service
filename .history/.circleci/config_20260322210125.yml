@@ -59,7 +59,7 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-
+      
       - run:
           name: Install kubectl
           command: |

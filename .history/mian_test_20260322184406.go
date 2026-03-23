@@ -165,6 +165,7 @@ func TestInvertHandler(t *testing.T) {
 	}
 }
 
+/////////////////////////
 // Error Handling Tests
 
 func TestInvalidMatrix(t *testing.T) {

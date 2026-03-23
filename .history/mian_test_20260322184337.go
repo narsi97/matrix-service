@@ -32,7 +32,9 @@ func createMultipartRequest(t *testing.T, endpoint string, content string) *http
 	return req
 }
 
+/////////////////////////
 // Business Logic Tests
+/////////////////////////
 
 func TestSum(t *testing.T) {
 	matrix := [][]int{
@@ -98,7 +100,9 @@ func TestInvert(t *testing.T) {
 	}
 }
 
+/////////////////////////
 // Handler Tests
+/////////////////////////
 
 func TestEchoHandler(t *testing.T) {
 	req := createMultipartRequest(t, "/echo", "1,2\n3,4")
@@ -165,7 +169,9 @@ func TestInvertHandler(t *testing.T) {
 	}
 }
 
+/////////////////////////
 // Error Handling Tests
+/////////////////////////
 
 func TestInvalidMatrix(t *testing.T) {
 	req := createMultipartRequest(t, "/add", "1,2,3\n4,5,6") // not square
