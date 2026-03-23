@@ -17,7 +17,7 @@ func main() {
 	http.HandleFunc("/invert", invertHandler)
 	http.HandleFunc("/health", healthHandler)
 
-	http.HandleFunc("/ui", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc(ui"/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "./static/index.html")
 	})
 
