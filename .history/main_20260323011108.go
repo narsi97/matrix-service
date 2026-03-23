@@ -18,8 +18,8 @@ func main() {
 	http.HandleFunc("/health", healthHandler)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./static/index.html")
-	})
+    http.ServeFile(w, r, "./static/index.html")
+})
 
 	fmt.Println("Server running on :8080")
 	http.ListenAndServe(":8080", nil)
